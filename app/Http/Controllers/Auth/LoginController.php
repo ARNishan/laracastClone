@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Exceptions\AuthFailedException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -25,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -38,6 +40,18 @@ class LoginController extends Controller
     }
     protected function authenticated(Request $request, $user)
     {
-        return 'login Succesfull';
+        session()->flash('success', 'Successfully logged in.');
+        if (request()->ajax()) {
+            return response()->json([
+                'status' => 'ok'
+            ]);
+        } 
+
+        return redirect('/');
     }
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw new AuthFailedException;
+    }
+
 }

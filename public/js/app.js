@@ -1838,6 +1838,8 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1878,9 +1880,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      email: '',
+      password: '',
+      remember: true,
+      loading: false,
+      errors: []
+    };
+  },
+  methods: {
+    emailIsValid: function emailIsValid() {
+      if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    attemptLogin: function attemptLogin() {
+      var _this = this;
+
+      this.errors = [];
+      this.loading = true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/login', {
+        email: this.email,
+        password: this.password,
+        remember: this.remember
+      }).then(function (resp) {
+        location.reload();
+      })["catch"](function (error) {
+        _this.loading = false;
+
+        if (error.response.status == 422) {
+          _this.errors.push("We couldn't verify your account details.");
+        } else {
+          _this.errors.push("Something went wrong , please refresh and try again.");
+        }
+      });
+    }
+  },
+  computed: {
+    isValidLoginForm: function isValidLoginForm() {
+      return this.emailIsValid() && this.password && !this.loading;
+    }
   }
 });
 
@@ -37185,7 +37231,7 @@ var render = function() {
     {
       staticClass: "modal fade",
       attrs: {
-        id: "LoginModal",
+        id: "loginModal",
         tabindex: "-1",
         role: "dialog",
         "aria-labelledby": "exampleModalLabel",
@@ -37222,9 +37268,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                    " +
-                              _vm._s(error) +
-                              "\n                  "
+                            "\n            " + _vm._s(error) + "\n          "
                           )
                         ]
                       )
@@ -37344,7 +37388,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-bold btn-block btn-primary",
-                    attrs: { disabled: !_vm.isValidLoginForm, type: "button" },
+                    attrs: { disabled: !_vm.isValidLoginForm, type: "submit" },
                     on: {
                       click: function($event) {
                         return _vm.attemptLogin()
@@ -37370,7 +37414,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "text-center text-muted fs-13 mt-20" }, [
       _vm._v("Don't have an account? "),
-      _c("a", { attrs: { href: "page-register.html" } }, [_vm._v("Sign up")])
+      _c("a", { attrs: { href: "" } }, [_vm._v("Sign up")])
     ])
   }
 ]
@@ -49541,7 +49585,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
-Vue.component('login-component', __webpack_require__(/*! ./components/login.vue */ "./resources/js/components/login.vue")["default"]);
+Vue.component('vue-login', __webpack_require__(/*! ./components/login.vue */ "./resources/js/components/login.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -10,6 +10,9 @@
     <link href="{{ asset('assets/css/thesaas.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 
+    {{-- Vue js --}}
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-touch-icon.png') }}">
     <link rel="icon" href="{{ asset('assets/img/favicon.png') }}">
@@ -26,38 +29,35 @@
     <nav class="topbar topbar-inverse topbar-expand-md topbar-sticky">
       <div class="container">
         
-        <div class="topbar-left">
-          <button class="topbar-toggler">&#9776;</button>
-          <a class="topbar-brand" href="/" style="color: white;">
-            BAHDCASTS
-          </a>
-        </div>
+                <div class="topbar-left">
+                  <button class="topbar-toggler">&#9776;</button>
+                  <a class="topbar-brand" href="/" style="color: white;">
+                    BAHDCASTS
+                  </a>
+                </div>
 
 
-        <div class="topbar-right">
-          <ul class="topbar-nav nav">
-            <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-            @auth
-                @admin 
-                  <li class="nav-item"><a href="{{-- {{ route('series.index') }} --}}" class="nav-link">All series</a></li>
-                  <li class="nav-item"><a href="{{-- {{ route('series.create') }} --}}" class="nav-link">Create series</a></li>
-                @else
-                
-                {{-- @endadmin  --}}
-                
-                <li class="nav-item">
-                  <a class="nav-link" href="{{-- {{ route('profile', auth()->user()->username) }} --}}">Hey {{-- {{ auth()->user()->name  }} --}}</a></li>
-                </li>
+               <div class="topbar-right">
+                <ul class="topbar-nav nav">
+                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                    @auth
+                      
+                          <li class="nav-item"><a href="{{-- {{ route('series.index') }} --}}" class="nav-link">All series</a></li>
+                          <li class="nav-item"><a href="{{-- {{ route('series.create') }} --}}" class="nav-link">Create series</a></li>
+                          <li class="nav-item">
+                          <a class="nav-link" href="{{-- {{ route('profile', auth()->user()->username) }} --}}">Hey {{ auth()->user()->name  }}</a></li>
+                          <li class="nav-item">
+                          <a class="nav-link" @click=" $refs.logoutForm.submit();" href="">Logout</a></li>
+                          <form ref="logoutForm" action="{{ route('logout') }}" method="POST" style="display: none;">@csrf</form>
 
-            @endauth
-            <li class="nav-item"><a href="{{-- {{ route('all-series') }} --}}" class="nav-link">All series</a></li>
 
-            @guest
-              <li class="nav-item"><a href="{{-- {{ route('all-series') }} --}}" class="nav-link">All series</a></li>
-              <li class="nav-item"><a class="nav-link" href="javascript:;" data-toggle="modal" data-target="#LoginModal">Login</a></li>
-            @endguest
-          </ul>
-        </div>
+                    @endauth
+                    @guest
+                            <li class="nav-item"><a href="{{-- {{ route('all-series') }} --}}" class="nav-link">All series</a></li>
+                            <li class="nav-item"><a href="#" class="nav-link" data-toggle="modal" data-target="#loginModal">Login</a></li>
+                    @endguest
+                   </ul>
+              </div>
 
       </div>
     </nav>
@@ -84,12 +84,13 @@
     </main>
     <!-- END Main container -->
 
-
-
+ @if(!auth()->check())
+ <vue-login></vue-login>
+ @endif
 
     {{-- <vue-noty></vue-noty> --}}
 {{--     @guest --}}
-        <login-component></login-component>
+
 {{--     @endguest --}}
     <!-- Footer -->
     <footer class="site-footer">
@@ -106,6 +107,8 @@
       </div>
     </footer>
     <!-- END Footer -->
+
+
     </div>
 
     <!-- Scripts -->
