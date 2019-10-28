@@ -32,8 +32,7 @@
               <button class="btn btn-bold btn-block btn-primary" @click="attemptLogin()" :disabled="!isValidLoginForm" type="submit">Login</button>
             </div>
           </form>
-          <p class="text-center text-muted fs-13 mt-20">Don't have an account? <a href="">Sign up</a>
-          <!-- <form ref="registerForm" action="{{ route('register') }}" method="GET" style="display: none;">@csrf</form> -->
+          <p class="text-center text-muted fs-13 mt-20">Don't have an account? <a @click=" $refs.registerForm.submit();" href="/register">Sign up</a>
           </p>
         </div>
       </div>

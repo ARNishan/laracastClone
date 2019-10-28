@@ -1881,7 +1881,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -37400,24 +37399,28 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(0)
+            _c("p", { staticClass: "text-center text-muted fs-13 mt-20" }, [
+              _vm._v("Don't have an account? "),
+              _c(
+                "a",
+                {
+                  attrs: { href: "/register" },
+                  on: {
+                    click: function($event) {
+                      return _vm.$refs.registerForm.submit()
+                    }
+                  }
+                },
+                [_vm._v("Sign up")]
+              )
+            ])
           ]
         )
       ])
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "text-center text-muted fs-13 mt-20" }, [
-      _vm._v("Don't have an account? "),
-      _c("a", { attrs: { href: "" } }, [_vm._v("Sign up")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
