@@ -12,8 +12,8 @@
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return new App\Mail\ConfirmYourEmail();
+    return view('welcome');
+    // return new App\Mail\ConfirmYourEmail();
 });
 
 Auth::routes();

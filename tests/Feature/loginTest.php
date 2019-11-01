@@ -20,7 +20,7 @@ class loginTest extends TestCase
 
         $this->postJson('/login', [
             'email' => $user->email,
-            'password' => '12312312'
+            'password' => 'secret'
         ], ['X-Requested-With' => 'XMLHttpRequest'])->assertStatus(200)
         ->assertJson([
             'status' => 'ok'

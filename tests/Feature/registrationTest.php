@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 use Mail;
+use App\User;
 use App\Mail\ConfirmYourEmail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -18,13 +19,14 @@ class registrationTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->post('/register', [
-            'name' => 'Jecey Duprie',
-            'email' => 'jeceyduprie@gmail.com',
-            'password' => '12312312'
+            'name' => 'kati frantz',
+            'email' => 'kati@frantz.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret'
         ])->assertRedirect();
 
         $this->assertDatabaseHas('users', [
-            'username' => str_slug('Jecey Duprie')
+            'username' => str_slug('kati frantz')
         ]);
     }
     public function test_a_user_has_a_token_after_registration()
@@ -34,9 +36,10 @@ class registrationTest extends TestCase
         $this->withoutExceptionHandling();
 
         $this->post('/register', [
-            'name' => 'Jecey Duprie',
-            'email' => 'jeceyduprie@gmail.com',
-            'password' => '12312312'
+            'name' => 'kati frantz',
+            'email' => 'kati@frantz.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret'
         ])->assertRedirect();
 
         $user = User::find(1);
@@ -50,9 +53,10 @@ class registrationTest extends TestCase
         Mail::fake();
         // register new user
         $this->post('/register', [
-            'name' => 'Jecey Duprie',
-            'email' => 'jeceyduprie@gmail.com',
-            'password' => '12312312'
+            'name' => 'kati frantz',
+            'email' => 'kati@frantz.com',
+            'password' => 'secret',
+            'password_confirmation' => 'secret'
         ])->assertRedirect();
         //assert that a particular email was sent 
         Mail::assertQueued(ConfirmYourEmail::class);
